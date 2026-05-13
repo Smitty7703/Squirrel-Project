@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,15 +7,6 @@ public interface IInteractable
 {
     void Interact(GameObject interactor);
     void Release(GameObject interactor);
-}
-
-public interface IPlayerState
-{
-    void Enter(PlayerController player);
-    void Update(PlayerController player);
-    void FixedUpdate(PlayerController player);
-    void LateUpdate(PlayerController player);
-    void Exit(PlayerController player);
 }
 
 public class PlayerController : MonoBehaviour
@@ -38,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private string gTag = "Ground";
     [SerializeField] private bool isInteracting = false;
     [SerializeField] private bool isOnGround = false;
+    private bool forceGroundMovement = false;
 
     [Header("Movement")]
     private bool movementClamped;
@@ -58,19 +51,30 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float force = isOnGround ? moveForce : airNudgeForce;
-        rb.AddForce(new Vector3(moveDir.x * force, moveDir.y * force, 0f));
+        float force;
+        if (forceGroundMovement) force = moveForce;
+        else
+        {
+            force = isOnGround ? moveForce : airNudgeForce;
+        }
 
-        if (isOnGround)
+        if (movementClamped)
+        {
+            ClampCheck();
+            rb.AddForce(new Vector3(moveDir.x * force, moveDir.y * force, 0f));
+        }
+        else
+        {
+            rb.AddForce(new Vector3(moveDir.x * force, moveDir.y * force, 0f));
+        }
+
+        if (isOnGround || forceGroundMovement)
         {
             Vector3 vel = rb.linearVelocity;
             vel.x = Mathf.Clamp(vel.x, -maxGroundSpeed, maxGroundSpeed);
             vel.y = Mathf.Clamp(vel.y, -maxGroundSpeed, maxGroundSpeed);
             rb.linearVelocity = vel;
         }
-
-        if (movementClamped)
-        ClampCheck();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -167,6 +171,11 @@ public class PlayerController : MonoBehaviour
         maxYClamp = yMax;
         movementClamped = isClamped;
     }
+
+    public void SetGroundMovement(bool isGround)
+    {
+        forceGroundMovement = isGround;
+    }
     #endregion
 
     private void ClampCheck()
@@ -176,6 +185,21 @@ public class PlayerController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minXClamp, maxXClamp);
         pos.y = Mathf.Clamp(pos.y, minYClamp, maxYClamp);
         transform.position = pos;
+
+        bool atYMin = rb.position.y <= minYClamp;
+        bool atYMax = rb.position.y >= maxYClamp;
+        if (atYMin || atYMax)
+        {
+            if (atYMin)
+            {
+                transform.position += new Vector3(0f, .01f, 0f);
+            }
+            if (atYMax)
+            {
+                transform.position += new Vector3(0f, -.01f, 0f);
+            }
+            rb.linearVelocity = Vector3.zero;
+        }
     }
 
     private void Jump()
