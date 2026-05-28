@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8317685301983718081
+--- !u!1 &7737724236883010842
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7864085037428311768}
-  - component: {fileID: 169826068146161984}
-  - component: {fileID: 4183898463300003616}
-  - component: {fileID: 7633692585054136449}
-  - component: {fileID: 3715226949211056079}
-  - component: {fileID: -3900884316231448413}
+  - component: {fileID: 7411410880801168793}
+  - component: {fileID: 2792801880353085492}
+  - component: {fileID: 6080651009563042400}
+  - component: {fileID: 5935962533416589497}
+  - component: {fileID: 2165388217675355039}
+  - component: {fileID: 4970900782401976257}
   m_Layer: 0
-  m_Name: ClimbPoint
+  m_Name: AttachPoint (Basic)
   m_TagString: InteractPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7864085037428311768
+--- !u!4 &7411410880801168793
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317685301983718081}
+  m_GameObject: {fileID: 7737724236883010842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 8}
-  m_LocalScale: {x: 0.5, y: 4.45, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &169826068146161984
+--- !u!33 &2792801880353085492
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317685301983718081}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4183898463300003616
+  m_GameObject: {fileID: 7737724236883010842}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6080651009563042400
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317685301983718081}
+  m_GameObject: {fileID: 7737724236883010842}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -93,13 +93,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7633692585054136449
-CapsuleCollider:
+--- !u!135 &5935962533416589497
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317685301983718081}
+  m_GameObject: {fileID: 7737724236883010842}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -111,42 +111,51 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7214966
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: -1.1320915, y: 0, z: 0}
---- !u!114 &3715226949211056079
+  serializedVersion: 3
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2165388217675355039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317685301983718081}
+  m_GameObject: {fileID: 7737724236883010842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a4f286182d79534198bad734a30ccb2, type: 3}
+  m_Script: {fileID: 11500000, guid: f0ffd638e9b4d3346b3552a9c5c02574, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClimbController
-  attachOffset: {x: -1.25, y: 0, z: 0}
-  minOutForce: 50
-  maxOutForce: 1000
-  minUpForce: 50
-  maxUpForce: 500
---- !u!114 &-3900884316231448413
+  m_EditorClassIdentifier: Assembly-CSharp::SwingController
+  cam: {fileID: 0}
+  swingMode: 0
+  initialSwingSpeed: 100
+  maxSwingSpeed: 150
+  swingAcceleration: 90
+  reelInSpeed: 3
+  reelOutSpeed: 2
+  minRopeLength: 1.5
+  boostSpeedThreshold: 8
+  boostMaxSpeed: 720
+  boostAcceleration: 360
+  arrowPrefab: {fileID: 5437521499851012204, guid: 2907c799b44cde8408428acfde0f5992, type: 3}
+  boostArrow: {fileID: 0}
+  boostArrowRadius: 3.5
+  boostAimSpeed: 2
+  refocusPlayerOnBoostLaunch: 0
+--- !u!114 &4970900782401976257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8317685301983718081}
+  m_GameObject: {fileID: 7737724236883010842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83b5c680ce00313499529ef4d4fe5a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FocusObject
-  type: 0
-  focusTransform: {fileID: 0}
+  type: 2
+  focusTransform: {fileID: 7411410880801168793}
   orthoZoom: 0
   transDuration: 0
   offset: {x: 0, y: 0, z: 0}

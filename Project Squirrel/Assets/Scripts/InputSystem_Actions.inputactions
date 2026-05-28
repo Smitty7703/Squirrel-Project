@@ -23,6 +23,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Special Interact 1",
+                    "type": "Button",
+                    "id": "eb9076fa-2026-45fa-8995-61c3fb333d4c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Special Interact 2",
+                    "type": "Button",
+                    "id": "521fcd8c-c66d-4f8e-b1a5-4d6f3de1471d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -102,6 +120,28 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e0db15d7-8a50-44ef-b152-31f01e659bd8",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special Interact 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8621a7a-84b8-4d24-a18d-7007ee9d8256",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special Interact 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

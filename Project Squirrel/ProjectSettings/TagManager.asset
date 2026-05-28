@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InteractPoint
   - Ground
+  - MovingObject
   layers:
   - Default
   - TransparentFX

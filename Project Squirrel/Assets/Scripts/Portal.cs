@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : Activatable
 {
     [SerializeField] private bool isActive;
     [SerializeField] private Portal connectedPort;
@@ -12,8 +12,19 @@ public class Portal : MonoBehaviour
         {
             if (connectedPort == null) { Debug.Log("No Connected Portal"); return; }
             isPortaling = true;
-            other.gameObject.transform.position = connectedPort.gameObject.transform.position; //Teleport player position to other portal
+            TeleportPlayer(other.gameObject.GetComponent<PlayerController>()); //Teleport player position to other portal
         }
+    }
+
+    private void TeleportPlayer(PlayerController player)
+    {
+        Rigidbody rb = player.GetComponent<Rigidbody>();
+        Vector3 localOffset = transform.InverseTransformPoint(player.transform.position);
+        player.transform.position = connectedPort.transform.TransformPoint(localOffset);
+
+        Quaternion portalRotationDelta = connectedPort.transform.rotation * Quaternion.Inverse(transform.rotation);
+
+        rb.linearVelocity = portalRotationDelta * rb.linearVelocity;
     }
 
     private void OnTriggerExit(Collider other)
@@ -33,4 +44,16 @@ public class Portal : MonoBehaviour
     {
         isPortaling = isPort;
     }
+
+    #region Activation Logic
+
+    public override void SetActiveStatus(Button button, bool isActive)
+    {
+        this.isActive = isActive;
+        Debug.Log(name + " isActive = " + isActive);
+    }
+
+    //Some cosmetic logic will be needed here to switch between active states visually
+
+    #endregion
 }

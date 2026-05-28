@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private string interTag = "InteractPoint";
     private string gTag = "Ground";
+    private string objTag = "MovingObject";
     [SerializeField] private bool isInteracting = false;
     [SerializeField] private bool isOnGround = false;
     private bool forceGroundMovement = false;
@@ -40,6 +41,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
     private Vector3 previousInputVel = Vector3.zero;
+
+    private MovableObj _currentPlatform;
 
     #region Updates and Triggers
     private void Awake()
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(gTag))
+        if (collision.gameObject.CompareTag(gTag) || collision.gameObject.CompareTag(objTag))
         {
             isOnGround = true;
             maxSpeed = maxGroundSpeed;
@@ -104,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag(gTag))
+        if (collision.gameObject.CompareTag(gTag) || collision.gameObject.CompareTag(objTag))
         {
             isOnGround = false;
             maxSpeed = maxAirSpeed;
@@ -178,6 +181,18 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Mounting
+    public void OnMountPlatform(MovableObj platform)
+    {
+        _currentPlatform = platform;
+    }
+
+    public void OnDismountPlatform()
+    {
+        _currentPlatform = null;
+    }
+    #endregion
+
     private void ClampCheck()
     {
         Vector3 pos = transform.position;
@@ -204,7 +219,18 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        rb.AddForce(jumpForce, ForceMode.Impulse);
+        Vector3 jumpVelocity = jumpForce;
+
+        if (_currentPlatform != null)
+        {
+            jumpVelocity += new Vector3(
+                _currentPlatform.Velocity.x,
+                Mathf.Max(_currentPlatform.Velocity.y, 0f)
+                );
+        }
+
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f);
+        rb.AddForce(jumpVelocity, ForceMode.Impulse);
     }
 
     public void Respawn()

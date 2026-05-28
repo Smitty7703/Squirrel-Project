@@ -109,6 +109,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Special Interact 1"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb9076fa-2026-45fa-8995-61c3fb333d4c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Special Interact 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""521fcd8c-c66d-4f8e-b1a5-4d6f3de1471d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,6 +206,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0db15d7-8a50-44ef-b152-31f01e659bd8"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special Interact 1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8621a7a-84b8-4d24-a18d-7007ee9d8256"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special Interact 2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -775,6 +815,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_SpecialInteract1 = m_Player.FindAction("Special Interact 1", throwIfNotFound: true);
+        m_Player_SpecialInteract2 = m_Player.FindAction("Special Interact 2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -870,6 +912,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_SpecialInteract1;
+    private readonly InputAction m_Player_SpecialInteract2;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -889,6 +933,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Movement".
         /// </summary>
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SpecialInteract1".
+        /// </summary>
+        public InputAction @SpecialInteract1 => m_Wrapper.m_Player_SpecialInteract1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SpecialInteract2".
+        /// </summary>
+        public InputAction @SpecialInteract2 => m_Wrapper.m_Player_SpecialInteract2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -921,6 +973,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @SpecialInteract1.started += instance.OnSpecialInteract1;
+            @SpecialInteract1.performed += instance.OnSpecialInteract1;
+            @SpecialInteract1.canceled += instance.OnSpecialInteract1;
+            @SpecialInteract2.started += instance.OnSpecialInteract2;
+            @SpecialInteract2.performed += instance.OnSpecialInteract2;
+            @SpecialInteract2.canceled += instance.OnSpecialInteract2;
         }
 
         /// <summary>
@@ -938,6 +996,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @SpecialInteract1.started -= instance.OnSpecialInteract1;
+            @SpecialInteract1.performed -= instance.OnSpecialInteract1;
+            @SpecialInteract1.canceled -= instance.OnSpecialInteract1;
+            @SpecialInteract2.started -= instance.OnSpecialInteract2;
+            @SpecialInteract2.performed -= instance.OnSpecialInteract2;
+            @SpecialInteract2.canceled -= instance.OnSpecialInteract2;
         }
 
         /// <summary>
@@ -1252,6 +1316,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMovement(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Special Interact 1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpecialInteract1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Special Interact 2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpecialInteract2(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
